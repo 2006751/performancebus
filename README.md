@@ -4,7 +4,7 @@
 ![GitHub language count](https://img.shields.io/github/languages/count/performancebus/README-template?style=for-the-badge)
 ![GitHub forks](https://img.shields.io/github/forks/performancebus/README-template?style=for-the-badge)
 
-<img src="https://github.com/2006751/performancebus/image-pb.jpg" alt="Performance BUS">
+<img src="https://github.com/2006751/performancebus/imagem-pb.jpg" alt="Performance BUS">
 
 Performance Bus: Projeto Integrador Univesp 202101
 
