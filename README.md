@@ -20,7 +20,11 @@ O projeto ainda está em desenvolvimento e as próximas atualizações serão vo
 - [x] Desenvolvimento das entidades de banco de dados
 - [x] Criação dos serviços para consultar, alterar, deletar e consultar as entidades
 - [ ] Documentação  
-- [ ] Criação do frontend
+- [x] Estrutura inicial do frontend da aplicação
+- [ ] Desenvolvimento do protótipo do frontend
+- [ ] Desenvolvimento das telas finais do frontend
+- [ ] Testes funcionais
+
 
 ## 💻 Pré-requisitos
 
@@ -28,6 +32,7 @@ Antes de começar, verifique se você atendeu aos seguintes requisitos:
 * Você tem uma máquina `<Windows / Linux / Mac>`.
 * Você instalou o Java 11 ou superior.
 * Você instalou o Maven 3.6 ou superior.
+* Você instalou o npm 6.9 ou superior.
 * Você instalou um cliente git.
 * Você leu `este guia`.
 
@@ -42,15 +47,16 @@ git clone git@github.com:<seu_usuário>/performancebus.git
 
 execute o maven:
 ```
-/<diretório-do-projeto>/mvn clean install
+/<diretório-do-projeto>/backend> mvn clean install
 ```
 
 ## ☕ Usando <nome_do_projeto>
 
-Este é um projeto que utiliza o spring-boot. Para utilizá-lo siga estas etapas:
+Este é um projeto que utiliza o spring-boot e react.js. Para utilizá-lo siga estas etapas:
 
+* Inicie o backend
 ```
-mvn spring-boot:run
+/<diretório-do-projeto>/frontend>mvn spring-boot:run
 ```
 
 Verifique se está funcionando acessando esta URL
@@ -59,6 +65,16 @@ Verifique se está funcionando acessando esta URL
 http://127.0.0.1:8080
 ```
 
+* Inicie o frontend
+```
+/<diretório-do-projeto>/frontend>npm start
+```
+
+Verifique se está funcionando acessando esta URL
+
+```
+http://127.0.0.1:3000
+```
 
 
 ## 📫 Contribuindo para <nome_do_projeto>
