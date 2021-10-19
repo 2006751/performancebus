@@ -30,22 +30,39 @@ O projeto ainda está em desenvolvimento e as próximas atualizações serão vo
 
 Antes de começar, verifique se você atendeu aos seguintes requisitos:
 * Você tem uma máquina `<Windows / Linux / Mac>`.
-* Você instalou o Java 11 ou superior.
-* Você instalou o Maven 3.6 ou superior.
-* Você instalou o npm 6.9 ou superior.
-* Você instalou um cliente git.
+* Você instalou o J[ava ]1(https://www.oracle.com/java/technologies/downloads) 1 ou superior.
+* Você instalou o M[aven ]3(https://maven.apache.org/) .6 ou superior.
+* Você instalou o n[pm ]6(https://www.npmjs.com/package/npm) .9 ou superior.
+* VocÃª instalou um cliente [git] (https://git-scm.com/downloads).
+* VocÃª instalou um SGBD como o [MySql] (https://www.mysql.com/downloads/), [Oracle] (https://www.oracle.com/br/downloads/), [Postgres] (https://www.postgresql.org/download/), etc.
 * Você leu `este guia`.
 
 ## 🚀 Instalando o <performancebus>
 
 Para instalar o <nome_do_projeto>, siga estas etapas:
 
-clone este repositório:
+* clone este repositório:
 ```
 git clone git@github.com:<seu_usuário>/performancebus.git
 ```
 
-execute o maven:
+* Crie um banco de dados a partir do SGDB da sua escolha. Por exemplo, para o MySQL utilize o comando abaixo no MySQL Command Line Client:
+```
+create database performancebus
+```
+
+* Configure a conexão com o banco de dados editando o arquivo application.properties. Edite as propriedades abaixo conforme o endereço do seu SGBD, usuário e senha.
+
+```
+spring.datasource.url=jdbc:mysql://<endereço-do-seu-banco>:<porta>/performancebus?useTimezone=true&serverTimezone=America/Sao_Paulo
+spring.datasource.username=<usuário-do-banco>
+spring.datasource.password=<senha-do-usuário-do-banco>
+spring.datasource.driverClassName=com.mysql.jdbc.Driver
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL8Dialect
+```
+
+
+* execute o maven:
 ```
 /<diretório-do-projeto>/backend> mvn clean install
 ```
@@ -91,7 +108,11 @@ Como alternativa, consulte a documentação do GitHub em [como criar uma solicit
 
 ## 🤝 Colaboradores
 
-... inserir depois
+Abel Cordeiro dos Santos, 2009228
+Alessandro Bezerra Aizawa, 1821764
+Gualberto Lepiane de Oliveira, 2003225
+Leonardo Sales Sena, 2014208
+Robson Luis Ferreira dos Santos, 2006751
 
 
 Esse projeto está sob licença. Veja o arquivo [LICENÇA](LICENSE.md) para mais detalhes.
