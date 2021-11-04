@@ -9,13 +9,17 @@
 Performance Bus: Projeto Integrador Univesp 202101
 
 ## Performance Bus. Sistema de análise e monitoramento da empresa de ônibus que opera em Mairiporã/SP. 
-## Trata-se de um sistema exemplo para demostração do projeto integrador da Univesp 2021
+Trata-se de um sistema exemplo para demostração do projeto integrador da Univesp 2021
 
 ### Tecnologias utilizadas
 * Java 11
 * Spring boot
 * Spring data jpa
 * Spring security
+* Swagger 
+* HAL
+* JSON
+* Rest
 * Maven
 * React.js
 * Banco de Dados relacional (multi repositório)
@@ -130,7 +134,14 @@ Verifique se está funcionando acessando esta URL
 http://127.0.0.1:3000
 ```
 
-* Um usuário inicial, administrador do projeto, será criado automaticamente assim que o backend do projeto terminar de iniciar.
+Este projeto foi criado visando o uso de serviços REST. Todos os serviços, com sua documentação e uso consta na URL
+
+```
+http://localhost:8080/swagger-ui/
+```
+
+
+Um usuário inicial, administrador do projeto, será criado automaticamente assim que o backend do projeto terminar de iniciar.
 ```
 Usuário: admin
 ```
@@ -152,11 +163,11 @@ Como alternativa, consulte a documentação do GitHub em [como criar uma solicit
 
 ## 🤝 Colaboradores
 
-Abel Cordeiro dos Santos, 2009228
-Alessandro Bezerra Aizawa, 1821764
-Gualberto Lepiane de Oliveira, 2003225
-Leonardo Sales Sena, 2014208
-Robson Luis Ferreira dos Santos, 2006751
+* Abel Cordeiro dos Santos, 2009228
+* Alessandro Bezerra Aizawa, 1821764
+* Gualberto Lepiane de Oliveira, 2003225
+* Leonardo Sales Sena, 2014208
+* Robson Luis Ferreira dos Santos, 2006751
 
 
 Esse projeto está sob licença. Veja o arquivo [LICENÇA](LICENSE.md) para mais detalhes.
