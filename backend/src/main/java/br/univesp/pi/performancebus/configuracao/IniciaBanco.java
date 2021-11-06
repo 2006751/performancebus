@@ -1,5 +1,6 @@
-package br.univesp.pi.performancebus.service;
+package br.univesp.pi.performancebus.configuracao;
 
+import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.stream.Collectors;
@@ -11,8 +12,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import br.univesp.pi.performancebus.model.Permissao;
+import br.univesp.pi.performancebus.model.TipoEvento;
 import br.univesp.pi.performancebus.model.Usuario;
 import br.univesp.pi.performancebus.repository.PermissaoRepository;
+import br.univesp.pi.performancebus.repository.TipoEventoRepository;
 import br.univesp.pi.performancebus.repository.UsuarioRepository;
 import br.univesp.pi.performancebus.security.UsuarioEventHandler;
 import lombok.extern.slf4j.Slf4j;
@@ -28,6 +31,9 @@ public class IniciaBanco {
 	private PermissaoRepository permissaoRepository;
 	
 	@Autowired
+	private TipoEventoRepository tipoEventoRepository;
+	
+	@Autowired
 	private UsuarioEventHandler usuarioEventHandler;
 
     @Bean
@@ -35,11 +41,11 @@ public class IniciaBanco {
     	
         return args -> {
 			if(StreamSupport.stream(permissaoRepository.findAll().spliterator(), false).collect(Collectors.toList()).size() == 0) {
-				Permissao permissao1 = new Permissao();
+				var permissao1 = new Permissao();
 				permissao1.setDescription("ADMIN");
-				Permissao permissao2 = new Permissao();
+				var permissao2 = new Permissao();
 				permissao2.setDescription("MANAGER");
-				Permissao permissao3 = new Permissao();
+				var permissao3 = new Permissao();
 				permissao3.setDescription("COMMON_USER");
 				
 				permissaoRepository.save(permissao1);
@@ -49,10 +55,9 @@ public class IniciaBanco {
 				log.info("Permissões inciais criadas.");
 			}
 	
-			
 			if(StreamSupport.stream(usuarioRepository.findAll().spliterator(), false).collect(Collectors.toList()).size() == 0) {
-				Permissao permissao = permissaoRepository.findByDescription("ADMIN");
-				Usuario usuario = new Usuario();
+				var permissao = permissaoRepository.findByDescription("ADMIN");
+				var usuario = new Usuario();
 				usuario.setNome("Admin");
 				usuario.setSobrenome("PerformanceBus");
 				usuario.setDataNascimento(new Date());
@@ -66,6 +71,16 @@ public class IniciaBanco {
 				log.info("Usuário admin inicial criado.");
 			}
 			
+			Arrays.asList("Limpeza", "Manutenção Preventiva", "Manutenção Corretiva", "Quebra em Viagem", "Acidente")
+				.forEach(descricao -> {
+					if(!tipoEventoRepository.findByDescricao(descricao).isPresent()) {
+						var tipoEvento = new TipoEvento();
+						tipoEvento.setDescricao(descricao);
+						tipoEventoRepository.save(tipoEvento);
+						log.info(MessageFormat.format("Evento ''{0}'' criado.", descricao));
+					}
+				});
+        
         };		
 	}
 

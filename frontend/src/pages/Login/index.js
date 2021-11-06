@@ -30,9 +30,9 @@ export default function Login() {
             localStorage.setItem('accessToken', response.data.token);
 
             history.push('/eventos')
-        } catch (err) {
-            alert('Login failed! Try again!');
-        }
+        } catch (error) {
+    	    alert("Login inválido!");
+	    };
     };
 
     return (

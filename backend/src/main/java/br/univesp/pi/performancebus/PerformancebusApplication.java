@@ -8,7 +8,10 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 
 import br.univesp.pi.performancebus.model.Evento;
 import br.univesp.pi.performancebus.model.Roteiro;
+import br.univesp.pi.performancebus.model.TipoEvento;
 import br.univesp.pi.performancebus.model.Usuario;
+import br.univesp.pi.performancebus.model.Veiculo;
+import br.univesp.pi.performancebus.model.Viagem;
 
 @SpringBootApplication(scanBasePackages={"br.univesp.pi.performancebus.*"})
 public class PerformancebusApplication  implements RepositoryRestConfigurer{
@@ -26,6 +29,9 @@ public class PerformancebusApplication  implements RepositoryRestConfigurer{
     	config.exposeIdsFor(Usuario.class);
         config.exposeIdsFor(Roteiro.class);
 		config.exposeIdsFor(Evento.class);
+		config.exposeIdsFor(Veiculo.class);
+		config.exposeIdsFor(Viagem.class);
+		config.exposeIdsFor(TipoEvento.class);
     }
     
     

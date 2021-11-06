@@ -5,6 +5,9 @@ import React from 'react';
 import { DropdownMenu, MenuItem } from 'react-bootstrap-dropdown-menu';
 import { useHistory } from 'react-router-dom';
 
+import Css from './Css';
+
+
 class SettingsMenu extends React.Component {
   constructor() {
     super();
@@ -19,7 +22,7 @@ class SettingsMenu extends React.Component {
 
   render() {
     return (
-      <DropdownMenu>
+      <DropdownMenu css={Css} >
         <MenuItem text="Usuários" location="/usuarios" />
         <MenuItem text="Veículos" location="/veiculos" />
         <MenuItem text="Viagens" location="/viagens" />

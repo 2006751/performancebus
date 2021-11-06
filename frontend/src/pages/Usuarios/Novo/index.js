@@ -106,7 +106,7 @@ export default function NewUsuario(){
                     <p>Entre com os dados do usuário e clique em {usuarioId === '0' ? "'Novo'" : "'Alterar'"}!</p>
                     <Link className="back-link" to="/usuarios">
                         <FiArrowLeft size={16} color="#251fc5"/>
-                        Voltar ao usuário
+                        Voltar aos usuários
                     </Link>
                 </section>
                 <form onSubmit={saveOrUpdate}>
@@ -129,6 +129,7 @@ export default function NewUsuario(){
                     />
 
                     <input
+						type="date"
                         placeholder="dataNascimento"
                         value={dataNascimento}
                         onChange={e => setDataNascimento(e.target.value)}

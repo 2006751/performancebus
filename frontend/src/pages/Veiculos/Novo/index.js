@@ -8,24 +8,25 @@ import './styles.css';
 
 import logoImage from '../../../assets/logo.svg';
 
-export default function NewBook(){
+export default function NewVeiculo(){
 
     const [id, setId] = useState(null);
-    const [author, setAuthor] = useState('');
-    const [launchDate, setLaunchDate] = useState('');
-    const [price, setPrice] = useState('');
-    const [title, setTitle] = useState('');
+    const [placa, setPlaca] = useState('');
+    const [identificacao, setIdentificacao] = useState('');
+    const [marca, setMarca] = useState('');
+    const [modelo, setModelo] = useState('');
+    const [anoDeFabricacao, setAnoDeFabricacao] = useState('');
 
-    const {bookId} = useParams();
+    const {veiculoId} = useParams();
 
-    const username = localStorage.getItem('username');
+    const nomeLocal = localStorage.getItem('nome');
     const accessToken = localStorage.getItem('accessToken');
 
     const history = useHistory();
 
-    async function loadBook() {
+    async function loadVeiculo() {
         try {
-            const response = await api.get(`api/book/v1/${bookId}`, {
+            const response = await api.get(`veiculo/${veiculoId}`, {
                 headers: {
                     Authorization: `Bearer ${accessToken}`
                 }
@@ -33,50 +34,54 @@ export default function NewBook(){
             let adjustedDate = response.data.launchDate.split("T", 10)[0];
 
             setId(response.data.id);
-            setTitle(response.data.title);
-            setAuthor(response.data.author);
-            setPrice(response.data.price);
-            setLaunchDate(adjustedDate);
+            setPlaca(response.data.placa);
+            setIdentificacao(response.data.identificacao);
+            setMarca(response.data.marca);
+            setModelo(response.data.modelo);
+            setAnoDeFabricacao(response.data.anoDeFabricacao);
         } catch (error) {
-            alert('Error recovering Book! Try again!');
-            history.push('/books');
+            alert('Erro recuperando veículos! Tente novamente.');
+            history.push('/veiculos');
         }
     }
 
     useEffect(() => {
-        if (bookId === '0') return;
-        else loadBook();
-    }, [bookId])
+        if (veiculoId === '0') return;
+        else loadVeiculo();
+    }, [veiculoId])
 
     async function saveOrUpdate(e){
         e.preventDefault();
 
         const data = {
-            title,
-            author,
-            launchDate,
-            price,
+            placa,
+            identificacao,
+            marca,
+            modelo,
+			anoDeFabricacao,
         }
 
         try {
-            if (bookId === '0') {
-                await api.post('api/book/v1', data, {
+            if (veiculoId === '0') {
+                await api.post('veiculo', data, {
                     headers: {
                         Authorization: `Bearer ${accessToken}`
                     }
                 });
             } else {
                 data.id = id;
-                await api.put('api/book/v1', data, {
+                await api.put('veiculo' + (data.id ? '/' + data.id : ''), data, {
                     headers: {
-                        Authorization: `Bearer ${accessToken}`
+                        Authorization: `Bearer ${accessToken}`,
+					    'Accept': 'application/json',
+        				'Content-Type': 'application/json'                    
                     }
                 });
             }
 
-            history.push('/books');
+            history.push('/veiculos');
         } catch (err) {
-            alert('Error while recording Book! Try again!')
+            alert('Erro ao salvar veiculo! Tente novamente.')
         }
     }
 
@@ -84,37 +89,42 @@ export default function NewBook(){
         <div className="new-book-container">
             <div className="content">
                 <section className="form">
-                    <img src={logoImage} alt="Erudio"/>
-                    <h1>{bookId === '0' ? 'Add New' : 'Update'} Book</h1>
-                    <p>Enter the book information and click on {bookId === '0' ? "'Add'" : "'Update'"}!</p>
-                    <Link className="back-link" to="/books">
+                    <img src={logoImage} alt="Performance Bus"/>
+                    <h1>{veiculoId === '0' ? 'Novo' : 'Alterar'} Veículo</h1>
+                    <p>Entre com os dados do veículo e clique em {veiculoId === '0' ? "'Novo'" : "'Alterar'"}!</p>
+                    <Link className="back-link" to="/veiculos">
                         <FiArrowLeft size={16} color="#251fc5"/>
-                        Back to Book
+                        Voltar aos veículos
                     </Link>
                 </section>
                 <form onSubmit={saveOrUpdate}>
                     <input
-                        placeholder="Title"
-                        value={title}
-                        onChange={e => setTitle(e.target.value)}
+                        placeholder="Placa"
+                        value={placa}
+                        onChange={e => setPlaca(e.target.value)}
                     />
                     <input
-                        placeholder="Author"
-                        value={author}
-                        onChange={e => setAuthor(e.target.value)}
+                        placeholder="Identificação"
+                        value={identificacao}
+                        onChange={e => setIdentificacao(e.target.value)}
                     />
                     <input
-                        type="date"
-                        value={launchDate}
-                        onChange={e => setLaunchDate(e.target.value)}
+                        placeholder="Marca"
+                        value={marca}
+                        onChange={e => setMarca(e.target.value)}
                     />
                     <input
-                        placeholder="Price"
-                        value={price}
-                        onChange={e => setPrice(e.target.value)}
+                        placeholder="Modelo"
+                        value={modelo}
+                        onChange={e => setModelo(e.target.value)}
+                    />
+                    <input
+                        placeholder="Ano de Fabricação"
+                        value={anoDeFabricacao}
+                        onChange={e => setAnoDeFabricacao(e.target.value)}
                     />
 
-                    <button className="button" type="submit">{bookId === '0' ? 'Add' : 'Update'}</button>
+                    <button className="button" type="submit">{veiculoId === '0' ? 'Novo' : 'Alterar'}</button>
                 </form>
             </div>
         </div>

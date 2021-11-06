@@ -18,11 +18,6 @@ export default function Eventos(){
 
     const history = useHistory();
 
-    async function logout() {
-        localStorage.clear();
-        history.push('/');
-    }
-
     async function editEvento(id) {
         try {
             history.push(`evento/new/${id}`)
@@ -72,16 +67,20 @@ export default function Eventos(){
                 <img src={logoImage} alt="PerformanceBus"/>
                 <span>Bem-Vindo, <strong>{nome.toUpperCase()}</strong>!</span>
                 <Link className="button" to="evento/new/0">Criar novo Evento</Link>
-                <button onClick={logout} type="button">
-                    <FiPower size={18} color="#251FC5" />
-                </button>
             </header>
 
             <h1>Eventos</h1>
             <ul>
                 {eventos.map(evento => (
                     <li key={evento.id}>
-                        <strong>Descrição:</strong>
+                        <strong>Data:</strong>
+                        <p>{evento.data}</p>
+                        <strong>Usuário:</strong>
+                        <p>{evento.usuario.nome}</p>
+                        <strong>Veículo:</strong>
+                        <p>{evento.veiculo.identificacao}</p>
+                        <strong>Evento:</strong>
+                        <p>{evento.tipoEvento.descricao}</p>
                         <p>{evento.descricao}</p>
                         
                         <button onClick={() => editEvento(evento.id)} type="button">

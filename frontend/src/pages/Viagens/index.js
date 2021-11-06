@@ -9,9 +9,9 @@ import './styles.css';
 
 import logoImage from '../../assets/logo.svg'
 
-export default function Veiculos(){
+export default function Viagens(){
 
-    const [veiculos, setVeiculos] = useState([]);
+    const [viagens, setViagens] = useState([]);
     const [page, setPage] = useState(1);
     
     const nome = localStorage.getItem('nome');
@@ -19,29 +19,29 @@ export default function Veiculos(){
 
     const history = useHistory();
 
-      async function editVeiculo(id) {
+      async function editViagem(id) {
         try {
-            history.push('veiculo/new/${id}')
+            history.push('viagem/new/${id}')
         } catch (error) {
-            alert('Edit failed! Try again.');
+            alert('Confirmação falhou. Tente novamente.');
         }
     }
-    async function deleteVeiculo(id) {
+    async function deleteViagem(id) {
         try {
-            await api.delete('veiculo/${id}', {
+            await api.delete('viagem/${id}', {
                 headers: {
                     Authorization: `Bearer ${accessToken}`
                 }
             })
 
-            setVeiculos(veiculos.filter(veiculo => veiculo.id !== id))
+            setViagens(viagens.filter(viagem => viagem.id !== id))
         } catch (err) {
             alert('Delete failed! Try again.');
         }
     }
 
-    async function fetchMoreVeiculos() {
-        const response = await api.get('veiculo', {
+    async function fetchMoreViagens() {
+        const response = await api.get('viagem', {
             headers: {
                 Authorization: `Bearer ${accessToken}`
             },
@@ -52,12 +52,12 @@ export default function Veiculos(){
             }
         });
 
-        setVeiculos([ ...veiculos, ...response.data._embedded.veiculos])
+        setViagens([ ...viagens, ...response.data._embedded.viagens])
         setPage(page + 1);
     }
 
     useEffect(() => {
-        fetchMoreVeiculos();
+        fetchMoreViagens();
     }, [])
     
     return (
@@ -66,36 +66,36 @@ export default function Veiculos(){
             <header>
                 <img src={logoImage} alt="PerformanceBus"/>
                 <span>Bem-vindo, <strong>{nome.toUpperCase()}</strong>!</span>
-                <Link className="button" to="veiculo/new/0">Adiciona Veículo</Link>
+                <Link className="button" to="viagem/new/0">Adiciona Viagem</Link>
             </header>
 
             <h1>Veículos</h1>
             <ul>
-                {veiculos.map(veiculo => (
-                    <li key={veiculo.id}>
-                        <strong>Placa:</strong>
-                        <p>{veiculo.placa}</p>
-                        <strong>Identificação:</strong>
-                        <p>{veiculo.identificacao}</p>
-                        <strong>Marca:</strong>
-                        <p>{veiculo.marca}</p>
-                        <strong>Modelo:</strong>
-                        <p>{veiculo.modelo}</p>
-                        <strong>Ano de Fabricação:</strong>
-                        <p>{veiculo.anoDeFabricacao}</p>
+                {viagens.map(viagem => (
+                    <li key={viagem.id}>
+                        <strong>Motorista:</strong>
+                        <p>{viagem.usuario.nome}</p>
+                        <strong>Veículo:</strong>
+                        <p>{viagem.veiculo.identificacao}</p>
+                        <strong>Roteiro:</strong>
+                        <p>{viagem.roteiro.localPartida} - {viagem.roteiro.localChegada}</p>
+                        <strong>Partida:</strong>
+                        <p>{viagem.partida}</p>
+                        <strong>Chegada:</strong>
+                        <p>{viagem.chegada}</p>
                         
-                        <button onClick={() => editVeiculo(veiculo.id)} type="button">
+                        <button onClick={() => editViagem(viagem.id)} type="button">
                             <FiEdit size={20} color="#251FC5"/>
                         </button>
                         
-                        <button onClick={() => deleteVeiculo(veiculo.id)} type="button">
+                        <button onClick={() => deleteViagem(viagem.id)} type="button">
                             <FiTrash2 size={20} color="#251FC5"/>
                         </button>
                     </li>
                 ))}
             </ul>
 
-            <button className="button" onClick={fetchMoreVeiculos} type="button">Mais...</button>
+            <button className="button" onClick={fetchMoreViagens} type="button">Mais...</button>
         </div>
     );
 }

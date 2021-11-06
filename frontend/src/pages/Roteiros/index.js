@@ -9,9 +9,9 @@ import './styles.css';
 
 import logoImage from '../../assets/logo.svg'
 
-export default function Veiculos(){
+export default function Roteiros(){
 
-    const [veiculos, setVeiculos] = useState([]);
+    const [roteiros, setRoteiros] = useState([]);
     const [page, setPage] = useState(1);
     
     const nome = localStorage.getItem('nome');
@@ -19,29 +19,29 @@ export default function Veiculos(){
 
     const history = useHistory();
 
-      async function editVeiculo(id) {
+    async function editRoteiro(id) {
         try {
-            history.push('veiculo/new/${id}')
+            history.push(`roteiro/new/${id}`)
         } catch (error) {
             alert('Edit failed! Try again.');
         }
     }
-    async function deleteVeiculo(id) {
+    async function deleteRoteiro(id) {
         try {
-            await api.delete('veiculo/${id}', {
+            await api.delete(`roteiro/${id}`, {
                 headers: {
                     Authorization: `Bearer ${accessToken}`
                 }
             })
 
-            setVeiculos(veiculos.filter(veiculo => veiculo.id !== id))
+            setRoteiros(roteiros.filter(roteiro => roteiro.id !== id))
         } catch (err) {
             alert('Delete failed! Try again.');
         }
     }
 
-    async function fetchMoreVeiculos() {
-        const response = await api.get('veiculo', {
+    async function fetchMoreRoteiros() {
+        const response = await api.get('roteiro', {
             headers: {
                 Authorization: `Bearer ${accessToken}`
             },
@@ -52,12 +52,12 @@ export default function Veiculos(){
             }
         });
 
-        setVeiculos([ ...veiculos, ...response.data._embedded.veiculos])
+        setRoteiros([ ...roteiros, ...response.data._embedded.roteiros])
         setPage(page + 1);
     }
 
     useEffect(() => {
-        fetchMoreVeiculos();
+        fetchMoreRoteiros();
     }, [])
     
     return (
@@ -65,37 +65,37 @@ export default function Veiculos(){
 			<SettingsMenu />
             <header>
                 <img src={logoImage} alt="PerformanceBus"/>
-                <span>Bem-vindo, <strong>{nome.toUpperCase()}</strong>!</span>
-                <Link className="button" to="veiculo/new/0">Adiciona Veículo</Link>
+                <span>Bem-Vindo, <strong>{nome.toUpperCase()}</strong>!</span>
+                <Link className="button" to="roteiro/new/0">Criar novo Roteiro</Link>
             </header>
 
-            <h1>Veículos</h1>
+            <h1>Roteiros</h1>
             <ul>
-                {veiculos.map(veiculo => (
-                    <li key={veiculo.id}>
-                        <strong>Placa:</strong>
-                        <p>{veiculo.placa}</p>
-                        <strong>Identificação:</strong>
-                        <p>{veiculo.identificacao}</p>
-                        <strong>Marca:</strong>
-                        <p>{veiculo.marca}</p>
-                        <strong>Modelo:</strong>
-                        <p>{veiculo.modelo}</p>
-                        <strong>Ano de Fabricação:</strong>
-                        <p>{veiculo.anoDeFabricacao}</p>
+                {roteiros.map(roteiro => (
+                    <li key={roteiro.id}>
+                        <strong>Local de Partida:</strong>
+                        <p>{roteiro.localPartida}</p>
+                        <strong>Local de Chegada:</strong>
+                        <p>{roteiro.localChegada}</p>
+                        <strong>Paradas:</strong>
+                        <p>{roteiro.quantidadeParadas}</p>
+                        <strong>Tempo esperado:</strong>
+                        <p>{roteiro.tempoEsperado}</p>
+                        <strong>Quilometragem:</strong>
+                        <p>{roteiro.quilometragem}</p>
                         
-                        <button onClick={() => editVeiculo(veiculo.id)} type="button">
+                        <button onClick={() => editRoteiro(roteiro.id)} type="button">
                             <FiEdit size={20} color="#251FC5"/>
                         </button>
                         
-                        <button onClick={() => deleteVeiculo(veiculo.id)} type="button">
+                        <button onClick={() => deleteRoteiro(roteiro.id)} type="button">
                             <FiTrash2 size={20} color="#251FC5"/>
                         </button>
                     </li>
                 ))}
             </ul>
 
-            <button className="button" onClick={fetchMoreVeiculos} type="button">Mais...</button>
+            <button className="button" onClick={fetchMoreRoteiros} type="button">Mais ...</button>
         </div>
     );
 }

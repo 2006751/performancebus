@@ -8,25 +8,25 @@ import './styles.css';
 
 import logoImage from '../../../assets/logo.svg';
 
-export default function NewEvento(){
+export default function NewViagem(){
 
     const [id, setId] = useState(null);
-    const [data, setData] = useState('');
     const [usuario, setUsuario] = useState('');
     const [veiculo, setVeiculo] = useState('');
-    const [tipoEvento, setTipoEvento] = useState('');
-    const [descricao, setDescricao] = useState('');
+    const [roteiro, setRoteiro] = useState('');
+    const [partida, setPartida] = useState('');
+    const [chegada, setChegada] = useState('');
 
-    const {eventoId} = useParams();
+    const {viagemId} = useParams();
 
     const nomeLocal = localStorage.getItem('nome');
     const accessToken = localStorage.getItem('accessToken');
 
     const history = useHistory();
 
-    async function loadEvento() {
+    async function loadViagem() {
         try {
-            const response = await api.get(`evento/${eventoId}`, {
+            const response = await api.get(`viagem/${viagemId}`, {
                 headers: {
                     Authorization: `Bearer ${accessToken}`
                 }
@@ -34,53 +34,54 @@ export default function NewEvento(){
             let adjustedDate = response.data.launchDate.split("T", 10)[0];
 
             setId(response.data.id);
-            setData(response.data.data);
             setUsuario(response.data.usuario);
             setVeiculo(response.data.veiculo);
-            setTipoEvento(response.data.tipoEvento);
-            setDescricao(response.data.descricao);
-
+            setRoteiro(response.data.roteiro);
+            setPartida(response.data.partida);
+            setChegada(response.data.chegada);
         } catch (error) {
-            alert('Erro recuperando evento! Tente novamente.');
-            history.push('/eventos');
+            alert('Erro recuperando veículos! Tente novamente.');
+            history.push('/viagem');
         }
     }
 
     useEffect(() => {
-        if (eventoId === '0') return;
-        else loadEvento();
-    }, [eventoId])
+        if (viagemId === '0') return;
+        else loadViagem();
+    }, [viagemId])
 
     async function saveOrUpdate(e){
         e.preventDefault();
 
         const data = {
-			data,
-			usuario,
-			veiculo,
-			tipoEvento,
-            descricao,
+            usuario,
+            veiculo,
+            roteiro,
+            partida,
+			chegada,
         }
 
         try {
-            if (eventoId === '0') {
-                await api.post('evento', data, {
+            if (viagemId === '0') {
+                await api.post('viagem', data, {
                     headers: {
                         Authorization: `Bearer ${accessToken}`
                     }
                 });
             } else {
                 data.id = id;
-                await api.put('evento', data, {
+                await api.put('viagem' + (data.id ? '/' + data.id : ''), data, {
                     headers: {
-                        Authorization: `Bearer ${accessToken}`
+                        Authorization: `Bearer ${accessToken}`,
+					    'Accept': 'application/json',
+        				'Content-Type': 'application/json'                    
                     }
                 });
             }
 
-            history.push('/eventos');
+            history.push('/viagem');
         } catch (err) {
-            alert('Erro ao salvar Evento! Tente novamente')
+            alert('Erro ao salvar a viagem! Tente novamente.')
         }
     }
 
@@ -90,45 +91,44 @@ export default function NewEvento(){
             <div className="content">
                 <section className="form">
                     <img src={logoImage} alt="Performance Bus"/>
-                    <h1>{eventoId === '0' ? 'Novo' : 'Alterar'} Evento</h1>
-                    <p>Entre com os dados do evento e clique em {eventoId === '0' ? "'Novo'" : "'Alterar'"}!</p>
-                    <Link className="back-link" to="/eventos">
+                    <h1>{viagemId === '0' ? 'Novo' : 'Alterar'} Viagem</h1>
+                    <p>Entre com os dados da viagem e clique em {viagemId === '0' ? "'Novo'" : "'Alterar'"}!</p>
+                    <Link className="back-link" to="/viagens">
                         <FiArrowLeft size={16} color="#251fc5"/>
-                        Voltar ao evento
+                        Voltar às viagens
                     </Link>
                 </section>
                 <form onSubmit={saveOrUpdate}>
-                    <input type="date"
-                        placeholder="Data"
-                        value={data}
-                        onChange={e => setData(e.target.value)}
-                    />
 
                     <input
-                        placeholder="Usuário"
+                        placeholder="Usuario"
                         value={usuario}
                         onChange={e => setUsuario(e.target.value)}
                     />
-
                     <input
                         placeholder="Veículo"
                         value={veiculo}
                         onChange={e => setVeiculo(e.target.value)}
                     />
-
                     <input
-                        placeholder="Tipo do Evento"
-                        value={tipoEvento}
-                        onChange={e => setTipoEvento(e.target.value)}
+                        placeholder="Roteiro"
+                        value={roteiro}
+                        onChange={e => setRoteiro(e.target.value)}
+                    />
+                    <input
+						type="date"
+                        placeholder="Partida"
+                        value={partida}
+                        onChange={e => setPartida(e.target.value)}
+                    />
+                    <input
+						type="date"
+                        placeholder="Chegada"
+                        value={chegada}
+                        onChange={e => setChegada(e.target.value)}
                     />
 
-                    <input
-                        placeholder="Descricao"
-                        value={descricao}
-                        onChange={e => setDescricao(e.target.value)}
-                    />
-
-                    <button className="button" type="submit">{eventoId === '0' ? 'Novo' : 'Alterar'}</button>
+                    <button className="button" type="submit">{viagemId === '0' ? 'Novo' : 'Alterar'}</button>
                 </form>
             </div>
         </div>

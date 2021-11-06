@@ -3,6 +3,8 @@ package br.univesp.pi.performancebus.model;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 
 import lombok.Data;
@@ -26,10 +28,12 @@ public class Roteiro {
 	@NotBlank
 	private String quantidadeParadas;
 
-	@NotBlank
+	@Min(1)
+	@Max(999)
 	private Integer tempoEsperado;
 
-	@NotBlank
+	@Min(1)
+	@Max(999)
 	private Float quilometragem;
 
 }
