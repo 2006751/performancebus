@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import { useHistory, Link, useParams } from 'react-router-dom';
 import { FiArrowLeft } from 'react-icons/fi'
+import AsyncSelect from 'react-select/async';
 
 import api from '../../../services/api'
 
@@ -11,10 +12,10 @@ import logoImage from '../../../assets/logo.svg';
 export default function NewEvento(){
 
     const [id, setId] = useState(null);
-    const [data, setData] = useState('');
-    const [usuario, setUsuario] = useState('');
-    const [veiculo, setVeiculo] = useState('');
-    const [tipoEvento, setTipoEvento] = useState('');
+    const [dataHora, setDataHora] = useState('');
+    const [usuario, setUsuario] = useState(null);
+    const [veiculo, setVeiculo] = useState(null);
+    const [tipoEvento, setTipoEvento] = useState(null);
     const [descricao, setDescricao] = useState('');
 
     const {eventoId} = useParams();
@@ -24,6 +25,75 @@ export default function NewEvento(){
 
     const history = useHistory();
 
+    const mapResponseUsuarioToCombo = (data) => ({
+	    value: data.id,
+	    label: data.nome,
+    });
+
+    const mapResponseVeiculoToCombo = (data) => ({
+	    value: data.id,
+	    label: data.identificacao,
+    });
+
+    const mapResponseTipoEventoToCombo = (data) => ({
+	    value: data.id,
+	    label: data.descricao,
+    });
+
+    async function loadUsuarios(value) {
+  	  console.log("fetch");
+      const data = await api.get('http://localhost:8080/usuario', {
+	        headers: {
+	            Authorization: `Bearer ${accessToken}`
+	        }
+      })
+		.then((response) => response.data._embedded.usuarios)
+	    .then((response) => response.map(mapResponseUsuarioToCombo))
+		;
+
+	  return data;	
+	}
+	
+    async function loadVeiculos(value) {
+      const data = await api.get('http://localhost:8080/veiculo', {
+	        headers: {
+	            Authorization: `Bearer ${accessToken}`
+	        }
+      })
+		.then((response) => response.data._embedded.veiculos)
+	    .then((response) => response.map(mapResponseVeiculoToCombo))
+		;
+
+	  return data;	
+	}
+	
+    async function loadTiposEvento(value) {
+      const data = await api.get('http://localhost:8080/tipo_evento', {
+	        headers: {
+	            Authorization: `Bearer ${accessToken}`
+	        }
+      })
+		.then((response) => response.data._embedded.tipos_evento)
+	    .then((response) => response.map(mapResponseTipoEventoToCombo))
+		;
+
+	  return data;	
+	}
+	
+    async function loadUsuarios(value) {
+  	  console.log("fetch");
+      const data = await api.get('http://localhost:8080/usuario', {
+	        headers: {
+	            Authorization: `Bearer ${accessToken}`
+	        }
+      })
+		.then((response) => response.data._embedded.usuarios)
+	    .then((response) => response.map(mapResponseUsuarioToCombo))
+		;
+
+	  return data;	
+	}
+	
     async function loadEvento() {
         try {
             const response = await api.get(`evento/${eventoId}`, {
@@ -34,7 +104,7 @@ export default function NewEvento(){
             let adjustedDate = response.data.launchDate.split("T", 10)[0];
 
             setId(response.data.id);
-            setData(response.data.data);
+            setDataHora(response.data.dataHora);
             setUsuario(response.data.usuario);
             setVeiculo(response.data.veiculo);
             setTipoEvento(response.data.tipoEvento);
@@ -46,6 +116,11 @@ export default function NewEvento(){
         }
     }
 
+	function handleChangeData(ev) {
+	  if (!ev.target['validity'].valid) return;
+	  const dt= ev.target['value'] + ':00';
+	  setDataHora(dt);
+	}
     useEffect(() => {
         if (eventoId === '0') return;
         else loadEvento();
@@ -55,16 +130,19 @@ export default function NewEvento(){
         e.preventDefault();
 
         const data = {
-			data,
+			dataHora,
+            descricao,
 			usuario,
 			veiculo,
 			tipoEvento,
-            descricao,
         }
 
         try {
             if (eventoId === '0') {
-                await api.post('evento', data, {
+//	            data.usuario =  [ "http://localhost:8080/usuario/"+data.usuario];
+//	            data.tipoEvento =  [ "http://localhost:8080/tipo_evento/"+data.tipoEvento];
+//	            data.veiculo =  [ "http://localhost:8080/veiculo/"+data.veiculo];
+                await api.post('evento/save', data, {
                     headers: {
                         Authorization: `Bearer ${accessToken}`
                     }
@@ -98,31 +176,47 @@ export default function NewEvento(){
                     </Link>
                 </section>
                 <form onSubmit={saveOrUpdate}>
-                    <input type="date"
-                        placeholder="Data"
-                        value={data}
-                        onChange={e => setData(e.target.value)}
+
+                    <input type="datetime-local"
+                        placeholder="Data/Hora"
+                        value={(dataHora || '').toString().substring(0, 19)}
+                        onChange={handleChangeData}
                     />
 
-                    <input
-                        placeholder="Usuário"
-                        value={usuario}
-                        onChange={e => setUsuario(e.target.value)}
-                    />
+    			    <AsyncSelect
+	                        placeholder="Selecione um Usuário"
+					        cacheOptions
+					        loadOptions={loadUsuarios}
+					        onInputChange={(data) => {}}
+					        onChange={(data) => {
+					          setUsuario(data.value);
+					        }}
+					        defaultOptions
+				    />
 
-                    <input
-                        placeholder="Veículo"
-                        value={veiculo}
-                        onChange={e => setVeiculo(e.target.value)}
-                    />
+    			    <AsyncSelect
+	                        placeholder="Selecione um Veículo"
+					        cacheOptions
+					        loadOptions={loadVeiculos}
+					        onInputChange={(data) => {}}
+					        onChange={(data) => {
+					          setVeiculo(data.value);
+					        }}
+					        defaultOptions
+				    />
 
-                    <input
-                        placeholder="Tipo do Evento"
-                        value={tipoEvento}
-                        onChange={e => setTipoEvento(e.target.value)}
-                    />
+    			    <AsyncSelect
+	                        placeholder="Tipo Evento"
+					        cacheOptions
+					        loadOptions={loadTiposEvento}
+					        onInputChange={(data) => {}}
+					        onChange={(data) => {
+					          setTipoEvento(data.value);
+					        }}
+					        defaultOptions
+				    />
 
-                    <input
+                    <input type="text"
                         placeholder="Descricao"
                         value={descricao}
                         onChange={e => setDescricao(e.target.value)}

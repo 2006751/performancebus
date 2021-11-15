@@ -1,6 +1,7 @@
 package br.univesp.pi.performancebus.model;
 
-import java.util.Date;
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -8,10 +9,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,30 +20,28 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor
-public class Evento {
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) 
+public class Evento implements Serializable {
 
 	@Id
 	@GeneratedValue
 	private Long id;
 
-	@NotBlank
+	@NotNull
 	private String descricao;
 
 	@NotNull
-	@JsonFormat(pattern="yyyy-MM-dd")
-	private Date data;
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
+	private LocalDateTime dataHora;
 
-	@NotNull
 	@Valid
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Usuario usuario;
 	
-	@NotNull
 	@Valid
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Veiculo veiculo;
 	
-	@NotNull
 	@Valid
 	@ManyToOne(fetch = FetchType.LAZY)
 	private TipoEvento tipoEvento;

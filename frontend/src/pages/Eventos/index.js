@@ -11,12 +11,22 @@ import logoImage from '../../assets/logo.svg'
 export default function Eventos(){
 
     const [eventos, setEventos] = useState([]);
-    const [page, setPage] = useState(1);
+    const [page, setPage] = useState(0);
     
     const nome = localStorage.getItem('nome');
     const accessToken = localStorage.getItem('accessToken');
 
     const history = useHistory();
+
+	function load(service, campo) {
+		const data =  api.get(service.href, {
+			headers: {
+				Authorization: `Bearer ${accessToken}`
+			}
+		}).then((response) => response.data[campo]);
+		console.log('campo', data)
+		return data;
+	}
 
     async function editEvento(id) {
         try {
@@ -25,6 +35,7 @@ export default function Eventos(){
             alert('Edit failed! Try again.');
         }
     }
+
     async function deleteEvento(id) {
         try {
             await api.delete(`evento/${id}`, {
@@ -46,7 +57,7 @@ export default function Eventos(){
             },
             params: {
                 page: page,
-                limit: 4,
+                limit: 20,
                 direction: 'asc'
             }
         });
@@ -73,14 +84,15 @@ export default function Eventos(){
             <ul>
                 {eventos.map(evento => (
                     <li key={evento.id}>
-                        <strong>Data:</strong>
-                        <p>{evento.data}</p>
+                        <strong>Data:</strong> 
+                        <p>{evento.dataHora}</p>
                         <strong>Usuário:</strong>
-                        <p>{evento.usuario.nome}</p>
+                        <p>{load(evento._links.usuario, 'nome')}</p>
                         <strong>Veículo:</strong>
-                        <p>{evento.veiculo.identificacao}</p>
+                        <p>{load(evento._links.veiculo, 'identificacao')}</p>
                         <strong>Evento:</strong>
-                        <p>{evento.tipoEvento.descricao}</p>
+                        <p>{load(evento._links.tipoEvento, 'descricao')}</p>
+                        <strong>Descrição:</strong>
                         <p>{evento.descricao}</p>
                         
                         <button onClick={() => editEvento(evento.id)} type="button">

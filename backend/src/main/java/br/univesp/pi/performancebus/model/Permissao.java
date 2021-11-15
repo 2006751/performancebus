@@ -11,12 +11,15 @@ import javax.persistence.Table;
 
 import org.springframework.security.core.GrantedAuthority;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Entity
 @Table(name = "permissao")
 @Data
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) 
 @EqualsAndHashCode
 public class Permissao implements GrantedAuthority, Serializable {
 
