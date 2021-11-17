@@ -103,11 +103,18 @@ spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL8Dialect
 ```
 
 
-* execute o maven:
+* execute o maven para atualizar as dependências do backend:
 ```
 /<diretório-do-projeto>/backend> mvn clean install
 ```
 
+* execute o npm para atualizar as dependências do frontend:
+```
+/<diretório-do-projeto>/frontend> npm install --force
+```
+
+	
+	
 ## ☕ Usando <nome_do_projeto>
 
 Este é um projeto que utiliza o spring-boot e react.js. Para utilizá-lo siga estas etapas:
