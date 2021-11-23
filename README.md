@@ -171,11 +171,7 @@ Como alternativa, consulte a documentação do GitHub em [como criar uma solicit
 
 ## 🤝 Colaboradores
 
-* Abel Cordeiro dos Santos, 2009228
-* Alessandro Bezerra Aizawa, 1821764
-* Gualberto Lepiane de Oliveira, 2003225
-* Leonardo Sales Sena, 2014208
-* Robson Luis Ferreira dos Santos, 2006751
+* RLFS, 2006751
 
 
 Esse projeto está sob licença. Veja o arquivo [LICENÇA](LICENSE.md) para mais detalhes.
