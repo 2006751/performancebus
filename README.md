@@ -54,12 +54,13 @@ O projeto ainda está em desenvolvimento e as próximas atualizações serão vo
 
 - [x] Desenvolvimento do frontend para persistência das entidades de acordo com os serviços do backend
 	- [x] Usuarios
-	- [ ] Veículos
-	- [ ] Viagens
-	- [ ] Eventos
-	- [ ] Roteiros
+	- [x] Veículos
+	- [x] Viagens
+	- [x] Eventos
+	- [x] Roteiros
+	- [ ] Gráficos
 
-- [ ] Documentação técnica
+- [x] Documentação técnica
 
 - [x] Arquivo README.md com explicação detalhada da instalação da aplicação.
 
