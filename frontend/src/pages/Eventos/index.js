@@ -12,20 +12,24 @@ export default function Eventos(){
 
     const [eventos, setEventos] = useState([]);
     const [page, setPage] = useState(0);
-    
+
+    const [usuarios, setUsuarios] = useState([]);
     const nome = localStorage.getItem('nome');
     const accessToken = localStorage.getItem('accessToken');
 
     const history = useHistory();
 
 	function load(service, campo) {
+        var   valorConsulta;
 		const data =  api.get(service.href, {
 			headers: {
 				Authorization: `Bearer ${accessToken}`
 			}
-		}).then((response) => response.data[campo]);
-		console.log('campo', data)
-		return data;
+		}).then((response) => { 
+            console.log('ee')
+            const datas = response.data;//.map(obj => [obj.id, obj[campo]]);
+            //this.setUsuarios({ datas});
+        });
 	}
 
     async function editEvento(id) {
@@ -57,11 +61,12 @@ export default function Eventos(){
             },
             params: {
                 page: page,
-                limit: 20,
+                limit: 1,
                 direction: 'asc'
             }
         });
 
+        console.log(response.data._embedded.eventos);
         setEventos([ ...eventos, ...response.data._embedded.eventos])
         setPage(page + 1);
     }
@@ -86,12 +91,6 @@ export default function Eventos(){
                     <li key={evento.id}>
                         <strong>Data:</strong> 
                         <p>{evento.dataHora}</p>
-                        <strong>Usuário:</strong>
-                        <p>{load(evento._links.usuario, 'nome')}</p>
-                        <strong>Veículo:</strong>
-                        <p>{load(evento._links.veiculo, 'identificacao')}</p>
-                        <strong>Evento:</strong>
-                        <p>{load(evento._links.tipoEvento, 'descricao')}</p>
                         <strong>Descrição:</strong>
                         <p>{evento.descricao}</p>
                         

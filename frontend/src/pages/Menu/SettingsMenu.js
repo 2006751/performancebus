@@ -28,6 +28,8 @@ class SettingsMenu extends React.Component {
         <MenuItem text="Viagens" location="/viagens" />
         <MenuItem text="Eventos" location="/eventos" />
         <MenuItem text="Roteiros" location="/roteiros" />
+        <MenuItem text="Graficos" location="/graficos" />
+        <MenuItem text="Graficos 2" location="/graficos2" />
         <MenuItem text="Logout" onClick={this.logout} />
       </DropdownMenu>
     );

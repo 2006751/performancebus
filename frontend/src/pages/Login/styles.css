@@ -1,7 +1,7 @@
 .login-container {
     width: 100%;
     max-width: 1120px;
-    height: 100vh;
+    height: 60vh;
     margin: 0 auto;
 
     display: flex;
@@ -30,4 +30,44 @@
     font-size: 32px;
     margin-bottom: 32px;
 }
+
+.text-container {
+    width: 100%;
+    max-width: 1000px;
+    height: 30vh;
+    margin: 0 auto;
+    padding: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.text-container header {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 16px;
+    cursor: pointer;
+    color: black;
+    padding: 2px;
+    border: none
+}
+
+.text-container section {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 10px;
+    cursor: pointer;
+    color: grey;
+    padding: 4px;
+    border: none
+}
+
 

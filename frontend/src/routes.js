@@ -18,6 +18,8 @@ import RoteiroNovo from './pages/Roteiros/Novo';
 import Viagens from './pages/Viagens';
 import ViagemNovo from './pages/Viagens/Novo';
 
+import Graficos from './pages/Graficos';
+import Graficos2 from './pages/Graficos2';
 
 export default function Routes() {
     return (
@@ -40,7 +42,10 @@ export default function Routes() {
 				<Route path="/viagens" exact component={Viagens}/>
 				<Route path="/viagem/new/:viagemId" component={ViagemNovo}/>
 
-            </Switch>
+                <Route path="/graficos" exact component={Graficos}/>
+                <Route path="/graficos2" exact component={Graficos2}/>
+
+           </Switch>
         </BrowserRouter>
     );
 }

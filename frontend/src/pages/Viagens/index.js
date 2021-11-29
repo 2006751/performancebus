@@ -69,7 +69,7 @@ export default function Viagens(){
                 <Link className="button" to="viagem/new/0">Adiciona Viagem</Link>
             </header>
 
-            <h1>Veículos</h1>
+            <h1>Viagens</h1>
             <ul>
                 {viagens.map(viagem => (
                     <li key={viagem.id}>

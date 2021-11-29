@@ -1,11 +1,16 @@
 package br.univesp.pi.performancebus.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.univesp.pi.performancebus.model.Evento;
@@ -13,6 +18,7 @@ import br.univesp.pi.performancebus.repository.EventoRepository;
 import br.univesp.pi.performancebus.repository.TipoEventoRepository;
 import br.univesp.pi.performancebus.repository.UsuarioRepository;
 import br.univesp.pi.performancebus.repository.VeiculoRepository;
+import br.univesp.pi.performancebus.repository.dto.EventosPorTipo;
 import br.univesp.pi.performancebus.vo.EventoVO;
 import lombok.extern.slf4j.Slf4j;
 
@@ -51,4 +57,18 @@ public class EventoController {
 		    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
 		}
 	}
+		
+	@RequestMapping(method = RequestMethod.GET, value = "/eventos/portipo", produces = {"application/json"}, consumes = {"application/json"})
+	public ResponseEntity eventosPorTipo(@Param("teste") String teste) {
+
+		try {
+			List<EventosPorTipo> eventosPorTipo = null;
+			repository.countEventosPorTipo();
+			return ResponseEntity.ok(eventosPorTipo);
+
+		} catch (BadCredentialsException e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+		}
+	}	
+	
 }

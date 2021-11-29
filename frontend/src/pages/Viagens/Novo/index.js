@@ -91,8 +91,8 @@ export default function NewViagem(){
             <div className="content">
                 <section className="form">
                     <img src={logoImage} alt="Performance Bus"/>
-                    <h1>{viagemId === '0' ? 'Novo' : 'Alterar'} Viagem</h1>
-                    <p>Entre com os dados da viagem e clique em {viagemId === '0' ? "'Novo'" : "'Alterar'"}!</p>
+                    <h1>{viagemId === '0' ? 'Nova' : 'Alterar'} Viagem</h1>
+                    <p>Entre com os dados da viagem e clique em {viagemId === '0' ? "'Nova'" : "'Alterar'"}!</p>
                     <Link className="back-link" to="/viagens">
                         <FiArrowLeft size={16} color="#251fc5"/>
                         Voltar às viagens

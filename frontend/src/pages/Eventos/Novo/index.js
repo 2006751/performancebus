@@ -216,9 +216,11 @@ export default function NewEvento(){
 					        defaultOptions
 				    />
 
-                    <input type="text"
+                    <textarea
                         placeholder="Descricao"
                         value={descricao}
+                        rows="5"
+                        cols="43"
                         onChange={e => setDescricao(e.target.value)}
                     />
 
