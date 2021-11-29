@@ -43,7 +43,7 @@ O projeto ainda está em desenvolvimento e as próximas atualizações serão vo
 	- [x] Eventos
 	- [x] Roteiros
 
-- [ ] Documentação funcional
+- [x] Documentação funcional
 
 - [x] Estrutura inicial do frontend da aplicação
 
@@ -64,7 +64,7 @@ O projeto ainda está em desenvolvimento e as próximas atualizações serão vo
 
 - [x] Arquivo README.md com explicação detalhada da instalação da aplicação.
 
-- [ ] Testes funcionais
+- [x] Testes funcionais
 
 
 ## 💻 Pré-requisitos
