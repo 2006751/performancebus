@@ -54,12 +54,13 @@ O projeto ainda está em desenvolvimento e as próximas atualizações serão vo
 
 - [x] Desenvolvimento do frontend para persistência das entidades de acordo com os serviços do backend
 	- [x] Usuarios
-	- [ ] Veículos
-	- [ ] Viagens
-	- [ ] Eventos
-	- [ ] Roteiros
+	- [x] Veículos
+	- [x] Viagens
+	- [x] Eventos
+	- [x] Roteiros
+	- [ ] Gráficos
 
-- [ ] Documentação técnica
+- [x] Documentação técnica
 
 - [x] Arquivo README.md com explicação detalhada da instalação da aplicação.
 
@@ -103,11 +104,18 @@ spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL8Dialect
 ```
 
 
-* execute o maven:
+* execute o maven para atualizar as dependências do backend:
 ```
 /<diretório-do-projeto>/backend> mvn clean install
 ```
 
+* execute o npm para atualizar as dependências do frontend:
+```
+/<diretório-do-projeto>/frontend> npm install --force
+```
+
+	
+	
 ## ☕ Usando <nome_do_projeto>
 
 Este é um projeto que utiliza o spring-boot e react.js. Para utilizá-lo siga estas etapas:
@@ -163,11 +171,7 @@ Como alternativa, consulte a documentação do GitHub em [como criar uma solicit
 
 ## 🤝 Colaboradores
 
-* Abel Cordeiro dos Santos, 2009228
-* Alessandro Bezerra Aizawa, 1821764
-* Gualberto Lepiane de Oliveira, 2003225
-* Leonardo Sales Sena, 2014208
-* Robson Luis Ferreira dos Santos, 2006751
+* RLFS, 2006751
 
 
 Esse projeto está sob licença. Veja o arquivo [LICENÇA](LICENSE.md) para mais detalhes.
